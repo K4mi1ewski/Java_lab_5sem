@@ -1,4 +1,4 @@
-public class Journal extends LibraryItem{
+public final class Journal extends LibraryItem{
     private String eISSN;
     private String Publisher;
     private String Latest_issue;

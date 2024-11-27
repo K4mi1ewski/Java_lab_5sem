@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.IOException;
 
-public final class Library
+public final class Library implements ILibrary
 {
     private List<LibraryItem> items = new ArrayList<>();
     private List<User> users = new ArrayList<>();
@@ -30,6 +30,10 @@ public final class Library
                 String bookPublisher = "";
                 if (values.length==4){
                     bookPublisher = values[3];
+                }
+                else
+                {
+                    bookPublisher = values[4];
                 }
                 int id = items.size();
                 items.add(new Book (id,bookTitle,bookAuthor,bookGenre,bookPublisher));
@@ -155,12 +159,34 @@ public final class Library
         return items.get(id);
     }
 
+    @Override
+    public List<LibraryItem> getItems()
+    {
+        return items;
+    }
+
+
+    public Initializer init(String path_books, String path_journals, String path_films)
+    {
+        //klasa anonimowa wewnętrzna
+        return new Initializer()
+        {
+            @Override
+            public void initialize()
+            {
+                LoadBooksFromFile(path_books);
+                LoadJournalsFromFile(path_journals);
+                LoadFilmsFromFile(path_films);
+            }
+        };
+    }
+
     public static void main(String[] args)
     {
         Library lib = new Library();
-        lib.LoadBooksFromFile("books.csv");
-        lib.LoadJournalsFromFile("jlist.csv");
-        lib.LoadFilmsFromFile("movies.csv");
+        Initializer initializer = lib.init("src/books.csv", "src/jlist.csv","src/movies.csv");
+        initializer.initialize();
+
         Student A = new Student(0);
         Student B = new Student(1);
         Teacher C = new Teacher(2);
@@ -191,5 +217,7 @@ public final class Library
         A.printFine(300);
         D.printFine(20);
         D.printFine(200);
+
+        lib.displayLibraryItemsCount();
     }
 }

@@ -1,5 +1,5 @@
 
-public abstract class LibraryItem {
+public sealed abstract class LibraryItem permits Book, Film, Journal{
     
     protected int ID;
     protected boolean isBorrowed=false;

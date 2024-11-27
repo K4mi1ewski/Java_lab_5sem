@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class User {
+public sealed abstract class User permits Teacher, Student {
     protected int id;
     protected boolean student;
     protected List<LibraryItem> books = new ArrayList<LibraryItem>();
